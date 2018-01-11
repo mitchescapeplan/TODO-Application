@@ -1,0 +1,21 @@
+body {background-image: url("images/background.jpg")}
+h1 {text-align: center;}
+#container-header {
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #f1f1f1;
+	border-radius: 10px;
+}
+
+#container-body {
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #f1f1f1;
+	border-radius: 10px;
+	text-indent: 50px;
+}
+.test{
+	width:20px;
+}
