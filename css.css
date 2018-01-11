@@ -1,5 +1,10 @@
 body {background-image: url("images/background.jpg")}
 h1 {text-align: center;}
+table {width: 100%;
+table-layout: fixed;}
+tr {text-align: left;}
+td {word-wrap: break-word;}
+
 #container-header {
 	width: 50%;
 	margin-left: auto;
@@ -15,7 +20,4 @@ h1 {text-align: center;}
 	background-color: #f1f1f1;
 	border-radius: 10px;
 	text-indent: 50px;
-}
-.test{
-	width:20px;
 }
