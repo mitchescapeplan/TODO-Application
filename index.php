@@ -1,3 +1,8 @@
+<?php
+	$dbconnection = new mysqli("localhost", "root", "", "todo") or die("Cannot connect");
+	@$total = $dbconnection->query("SELECT COUNT(*) FROM 'tasks'");
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,11 +14,11 @@
 		<h1>Todo List</h1>
 	</div>
 	<div id="container-body">
-		<h2>Total Tasks:</h2>  <p>Number</p>
-		<a href="pending.php"><h3>Pending:</h3></a>   <p>Number</p>
-		<h3>Started:</h3>	<p>Number</p>
-		<h3>Completed:</h3>		<p>Number</p>
-		<h3>Late:</h3>		<p>Number</p>
+		<a href="tasks.php"><h2>Total Tasks:</h2></a>  <p></p>
+		<a href="pending.php"><h3>Pending:</h3></a> <?php echo " The number is $total" ?>  <p>Number</p>
+		<a href="started.php"><h3>Started:</h3></a>	<p>Number</p>
+		<a href="completed.php"><h3>Completed:</h3></a>	<p>Number</p>
+		<a href="late.php"><h3>Late:</h3></a> <p>Number</p>
 	</div>
 </body>
 </html>
