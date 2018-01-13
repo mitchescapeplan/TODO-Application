@@ -1,3 +1,9 @@
+<?php
+	$dbconnection = mysqli_connect('localhost', 'root', '', 'todo');
+	
+	$queryresult = $dbconnection->query("SELECT Name, Description, CompletionDate, Status FROM `tasks` WHERE Status = 'completed' ");	
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,12 +22,15 @@
 				<th>Completion Date</th>
 				<th>Status</th>
 			<tr>
-			<tr>
-				<td>name</td>
-				<td>The task that I am trying to do is one of upmost importance. I need to make sure I take the car today</td>
-				<td>date</td>
-				<td>completed</td>
-			</tr>
+			<?php
+					while($row = $queryresult->fetch_assoc())
+					{
+						echo "<tr><td>", $row["Name"], "</td>
+						<td>", $row["Description"], "</td>
+						<td>", $row["CompletionDate"], "</td>
+						<td>", $row["Status"], "</td></tr>";
+					}
+			?>
 		</table>
 	</div>
 </body>
