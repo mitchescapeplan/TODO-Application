@@ -25,10 +25,19 @@
 			<?php
 					while($row = $queryresult->fetch_assoc())
 					{
-						echo "<tr><td>", $row["Name"], "</td>
+						$taskid = $row["TaskID"];
+						$name = $row["Name"];
+						$status = $row["Status"];
+						echo "<form method='post' action='delete.php'>
+						<tr><td>", $row["Name"], "</td>
 						<td>", $row["Description"], "</td>
 						<td>", $row["CompletionDate"], "</td>
-						<td>", $row["Status"], "</td></tr>";
+						<td>", $row["Status"], "</td>
+						<td>
+						<input type='hidden' name='id' value='$taskid'/>
+						<input type='hidden' name='name' value='$name'/>
+						<input type='hidden' name='status' value='$status'/>
+						<input name='deletebutton' id='deletebutton' type='submit' value='Delete'/></td></tr></form>";
 					}
 			?>
 		</table>
