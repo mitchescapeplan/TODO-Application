@@ -28,11 +28,30 @@
 		<h1>Todo List</h1>
 	</div>
 	<div id="container-body">
-		<a href="tasks.php"><h2>Total Tasks:</h2></a> <p><?php echo $total[0]?></p>
-		<a href="pending.php"><h3>Pending:</h3></a> <p><?php echo $pending[0]?></p>
-		<a href="started.php"><h3>Started:</h3></a>	<p><?php echo $started[0]?></p>
-		<a href="completed.php"><h3>Completed:</h3></a>	<p><?php echo $completed[0]?></p>
-		<a href="late.php"><h3>Late:</h3></a> <p><?php echo $late[0]?></p>
+		<form method="post" action="tasks.php">
+			<h2>Total Tasks: <?php echo $total[0]?>
+			<span style="float:right; padding-right:5px;"><input type="hidden" name="status" value="All"/><input type="submit" value="View All Tasks"/></span></h2> 
+		</form>
+		<form method="post" action="tasks.php">
+			<h2>Pending: <?php echo $pending[0]?>
+			<span style="float:right; padding-right:5px;"><input type="hidden" name="status" value="Pending"/>
+			<input type="submit" value="View Pending Tasks"/></span></h2>
+		</form>	
+		<form method="post" action="tasks.php">
+			<h2>Started: <?php echo $started[0]?>
+			<span style="float:right; padding-right:5px;"><input type="hidden" name="status" value="Started"/>
+			<input type="submit" value="View Started Tasks"/></span></h2>
+		</form>
+		<form method="post" action="tasks.php">
+			<h2>Completed: <?php echo $completed[0]?>
+			<span style="float:right; padding-right:5px;"><input type="hidden" name="status" value="Completed"/>
+			<input type="submit" value="View Completed Tasks"/></span></h2>
+		</form>
+		<form method="post" action="tasks.php">
+			<h2>Late: <?php echo $late[0]?>
+			<span style="float:right; padding-right:5px;"><input type="hidden" name="status" value="Late"/>
+			<input type="submit" value="View Late Tasks"/></span></h2>
+		</form>
 	</div>
 </body>
 </html>

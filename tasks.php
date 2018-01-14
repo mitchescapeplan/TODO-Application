@@ -1,7 +1,13 @@
 <?php
 	$dbconnection = mysqli_connect('localhost', 'root', '', 'todo');
 	
-	$queryresult = $dbconnection->query("SELECT TaskID, Name, Description, CompletionDate, Status FROM `tasks` ");	
+	$querystatus = $_POST["status"];
+	if($querystatus == "All"){
+		$queryresult = $dbconnection->query("SELECT TaskID, Name, Description, CompletionDate, Status FROM `tasks`");
+	}
+	else{
+		$queryresult = $dbconnection->query("SELECT TaskID, Name, Description, CompletionDate, Status FROM tasks WHERE Status = '$querystatus'");
+	}
 ?>
 
 <!DOCTYPE html>
@@ -12,10 +18,9 @@
 </head>
 <body>
 	<div id="container-header">
-		<h1>View Tasks</h1>
+		<h1>View <?php echo "$querystatus"?> Tasks</h1>
 	</div>
 	<div id="container-body">
-	
 		<table>
 			<tr>
 				<th>Task Name</th>
@@ -42,6 +47,7 @@
 						<input name='deletebutton' id='deletebutton' type='submit' value='Delete'/></td></tr></form>";
 					}
 			?>
+			<br><br>
 			
 		</table>
 	</div>
