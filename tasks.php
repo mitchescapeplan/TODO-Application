@@ -60,10 +60,14 @@
 								<input name='action' type='submit' value='Delete'/>
 								<input name='action' type='submit' value='Save'></td></tr></form>";
 					}
-			?>
-			<br><br>
-			
+			?>			
 		</table>
+		<br><br>
+		<span style="float:center">
+			<form method="post" action='index.php'>
+				<input name="action" type="submit" value="Go Home"/>
+			</form>
+		</span>
 	</div>
 </body>
 </html>
