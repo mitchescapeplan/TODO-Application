@@ -52,6 +52,11 @@
 			<span style="float:right; padding-right:5px;"><input type="hidden" name="status" value="Late"/>
 			<input type="submit" value="View Late Tasks"/></span></h2>
 		</form>
+		<span style="text-align: center">
+			<form method="post" action="addtask.php">
+				<input type="submit" value="Add New Task"/>
+			</form>
+		</span>
 	</div>
 </body>
 </html>
