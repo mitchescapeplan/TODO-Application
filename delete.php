@@ -4,8 +4,17 @@
 	$deleteid = $_POST["id"];
 	$name = $_POST["name"];
 	$status = $_POST["status"];
+	$statuschange = $_POST["statuschange"];
+	$action = $_POST["action"];
 	
-	$dbconnection->query("DELETE FROM tasks where TaskID=$deleteid");
+	if($action == "Delete"){
+		$dbconnection->query("DELETE FROM tasks where TaskID=$deleteid");
+	}
+	else if($action == "Save"){
+		$dbconnection->query("UPDATE tasks SET Status='$statuschange' WHERE TaskID='$deleteid'");
+	}
+	
+	
 ?>
 
 <!DOCTYPE html>
@@ -16,10 +25,17 @@
 </head>
 <body>
 	<div id="container-header">
-		<h1>Delete</h1>
+		<h1>Delete <?php echo "$action $status $statuschange" ?></h1>
 	</div>
 	<div id="container-body">
-		<p>You successfully deleted the task '<strong><?php echo "$name" ?></strong>' with the status '<strong><?php echo "$status" ?></strong>'</p>
+	<?php
+		if($action=="Delete"){
+			echo "<p>You successfully deleted the task '<strong>$name</strong>' with the status '<strong>$status</strong>'</p>";
+		}
+		if($action=="Save"){
+			echo "<p>You successfully Saved the task '<strong>$name</strong>' with the old status '<strong>$status</strong>' and new status of '<strong>$statuschange</strong>'</p>";
+		}
+	?>
 		<p style="text-align:center"><a href="index.php"><button>Go Home</button></a></p>
 	</div>
 </body>

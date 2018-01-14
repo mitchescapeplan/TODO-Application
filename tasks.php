@@ -36,15 +36,29 @@
 						$name = $row["Name"];
 						$status = $row["Status"];
 						echo "<form method='post' action='delete.php'>
-						<tr><td>", $row["Name"], "</td>
-						<td>", $row["Description"], "</td>
-						<td>", $row["CompletionDate"], "</td>
-						<td>", $row["Status"], "</td>
-						<td>
-						<input type='hidden' name='id' value='$taskid'/>
-						<input type='hidden' name='name' value='$name'/>
-						<input type='hidden' name='status' value='$status'/>
-						<input name='deletebutton' id='deletebutton' type='submit' value='Delete'/></td></tr></form>";
+						<tr>
+							<td>", $name, "</td>
+							<td>", $row["Description"], "</td>
+							<td>", $row["CompletionDate"], "</td>
+							<td><select name='statuschange'>
+									<option value='$status'>", $row["Status"], "</option>";
+									if($status != "Pending"){
+										echo "<option value='Pending'>Pending</option>";
+									}
+									if($status != "Started"){
+										echo "<option value='Started'>Started</option>";
+									}
+									if($status != "Completed"){
+										echo "<option value='Completed'>Completed</option></td>";
+									}
+									echo "
+									
+							<td>
+								<input type='hidden' name='id' value='$taskid'/>
+								<input type='hidden' name='name' value='$name'/>
+								<input type='hidden' name='status' value='$status'/>
+								<input name='action' type='submit' value='Delete'/>
+								<input name='action' type='submit' value='Save'></td></tr></form>";
 					}
 			?>
 			<br><br>
