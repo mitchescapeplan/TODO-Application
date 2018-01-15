@@ -1,14 +1,24 @@
 <?php
 	$returned = $_POST["return"];
+	$username = $_POST["username"];
+	$password = $_POST["password"];
+	$dbconnection = mysqli_connect('localhost', 'root', '', 'todo');
+	if ($username != NULL){
+		$userquery = $dbconnection->query("SELECT COUNT(*) FROM users WHERE UserName='$username' AND Password='$password'");
+		$user = $userquery->fetch_array(MYSQLI_NUM);
+	}
 	if ($returned == "yes")
 	{
-		$dbconnection = mysqli_connect('localhost', 'root', '', 'todo');
 		$taskname=$_POST["taskname"];
 		$desc=$_POST["taskdesc"];
 		$date=$_POST["date"];
 		$status=$_POST["status"];
-		$dbconnection->query("INSERT INTO tasks (Name, Description, CompletionDate, Status) VALUES ('$taskname', '$desc', '$date', '$status')");
-	};
+		$useridquery = $dbconnection->query("SELECT UserID FROM users WHERE UserName='$username' AND Password='$password'");
+		$users = $useridquery->fetch_array(MYSQLI_NUM);
+		$userid = $users["0"];
+		
+		$dbconnection->query("INSERT INTO tasks (UserID, Name, Description, CompletionDate, Status) VALUES ('$userid', '$taskname', '$desc', '$date', '$status')");
+	}
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +32,9 @@
 		<h1>Add New Task</h1>
 	</div>
 	<div id="container-body">
-	<?php 	if($returned == "yes" && $taskname != NULL){
+	<?php 	
+		if($user[0]>=1){
+			if($returned == "yes" && $taskname != NULL){
 				echo "<p> Successfully added task <strong>'$taskname'</strong> with status <strong>'$status'</strong>";
 			}
 	?>
@@ -40,13 +52,26 @@
 				<option value="Completed">Completed</option>
 			</select><br><br>
 			<input type="hidden" name="return" value="yes"/>
+			<input type="hidden" name="username" value="<?php echo "$username"?>"/>
+			<input type="hidden" name="password" value="<?php echo "$password"?>"/>
 			<input type="submit" value="Add New Task" style="float:right"/>
 		</form>
 		<br><br>
-		<form method="post" action="index.php">
-			<input type="submit" value="Go Home" style="float:right"/>
-		</form>
-		<br><br>
+			<form method="post" action="home.php">
+				<input type="hidden" name="username" value="<?php echo "$username"?>"/>
+				<input type="hidden" name="password" value="<?php echo "$password"?>"/>
+				<input type="submit" value="Go Home" style="float:right"/>
+			</form><br><br>
+		<?php }
+			else{?>
+				<div style="text-align: center">
+		
+					<p>You do not have access to this page
+					<form method="post" action="index.php">
+						<input type="submit" value="Go Back"/>
+					</form></p>
+				</div>
+		<?php }?>
 	</div>
 </body>
 </html>

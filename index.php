@@ -1,22 +1,17 @@
 <?php
-	$dbconnection = mysqli_connect('localhost', 'root', '', 'todo');
+	$user = $_POST["usernamereg"];
+	$pass1 = $_POST["password1reg"];
+	$pass2 = $_POST["password2reg"];
 	
-	$queryresult = $dbconnection->query('SELECT COUNT(*) FROM tasks');
-	$total = $queryresult->fetch_array(MYSQLI_NUM);
-	
-	$pendingquery = $dbconnection->query("SELECT COUNT(*) FROM tasks WHERE Status = 'pending'");
-	$pending = $pendingquery->fetch_array(MYSQLI_NUM);
-	
-	$startedquery = $dbconnection->query("SELECT COUNT(*) FROM tasks WHERE Status = 'started'");
-	$started = $startedquery->fetch_array(MYSQLI_NUM);
-	
-	$completedquery = $dbconnection->query("SELECT COUNT(*) FROM tasks WHERE Status = 'completed'");
-	$completed = $completedquery->fetch_array(MYSQLI_NUM);
-	
-	$latequery = $dbconnection->query("SELECT COUNT(*) FROM tasks WHERE Status = 'late'");
-	$late = $latequery->fetch_array(MYSQLI_NUM);
+	if($user != NULL && $pass1 == $pass2){
+		$dbconnection = mysqli_connect('localhost', 'root', '', 'todo');
+		$userquery = $dbconnection->query("SELECT COUNT(*) FROM users WHERE UserName='$user' AND Password='$pass1'");
+		$userexists = $userquery->fetch_array(MYSQLI_NUM);
+		if ($userexists[0] == 0){
+			$dbconnection->query("INSERT INTO users (UserName, Password) VALUES ('$user', '$pass1')");
+		}
+	}
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,38 +20,35 @@
 </head>
 <body>
 	<div id="container-header">
-		<h1>Todo List</h1>
+		<h1>Welcome!</h1>
 	</div>
 	<div id="container-body">
-		<form method="post" action="tasks.php">
-			<h2>Total Tasks: <?php echo $total[0]?>
-			<span style="float:right; padding-right:5px;"><input type="hidden" name="status" value="All"/><input type="submit" value="View All Tasks"/></span></h2> 
-		</form>
-		<form method="post" action="tasks.php">
-			<h2>Pending: <?php echo $pending[0]?>
-			<span style="float:right; padding-right:5px;"><input type="hidden" name="status" value="Pending"/>
-			<input type="submit" value="View Pending Tasks"/></span></h2>
-		</form>	
-		<form method="post" action="tasks.php">
-			<h2>Started: <?php echo $started[0]?>
-			<span style="float:right; padding-right:5px;"><input type="hidden" name="status" value="Started"/>
-			<input type="submit" value="View Started Tasks"/></span></h2>
-		</form>
-		<form method="post" action="tasks.php">
-			<h2>Completed: <?php echo $completed[0]?>
-			<span style="float:right; padding-right:5px;"><input type="hidden" name="status" value="Completed"/>
-			<input type="submit" value="View Completed Tasks"/></span></h2>
-		</form>
-		<form method="post" action="tasks.php">
-			<h2>Late: <?php echo $late[0]?>
-			<span style="float:right; padding-right:5px;"><input type="hidden" name="status" value="Late"/>
-			<input type="submit" value="View Late Tasks"/></span></h2>
-		</form>
-		<span style="text-align: center">
-			<form method="post" action="addtask.php">
-				<input type="submit" value="Add New Task"/>
+		<div style="text-align:center">
+			<h2>Log In</h2>
+			<?php if($userexists[0] == 0 && $user != NULL && $pass1 == $pass2){
+					echo "<p>User created!</p>";
+				  }
+				  else if ($userexists[0] == 1){
+					  echo "<p>User '<strong>$user</strong>' already exists</p>";
+				  }
+				  else if($pass1 != $pass2){
+					  echo "<p>Password must be the same in both fields. Please try again</p>";
+				  }
+			?>
+			<form method="post" action="home.php">
+				<label for="username">Username:</label>
+				<input name="username" id="username" type="text" required/><br><br>
+			
+				<label style="padding-left:50px;" for="password">Password:</label>
+				<input name="password" id="password" type="text" required/><br><br>
+				<input type="submit" value="Log In"/>
 			</form>
-		</span>
+			
+			<form method="post" action="register.php">
+				<input type="submit" value="Register"/>
+			</form>
+			
+		</div>
 	</div>
 </body>
 </html>
